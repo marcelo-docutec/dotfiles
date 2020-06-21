@@ -1,0 +1,43 @@
+hushlogin
+
+wich ll
+
+cdc
+sudo !! -> placeholder con alias que remplaza con el comando anterior
+
+-------
+ls | fzf
+
+print -P '%n @ %d'
+
+http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html
+
+$? = 0 true
+     = 1 false
+
+function git_prompt_info {
+  inside_git_repo="$(git rev-parse --is-inside-work-tree 2>/dev/null)"
+
+  if [ "$inside_git_repo" ]; then
+    current_branch=$(git branch --show-current)
+    print -P " on %{%F{yellow}%}$current_branch%{%f%}"
+  else
+    echo ""
+  fi
+}
+
+for i in $(seq 10); do time zsh -i -c exit; done
+
+command -v zsh
+
+zim:  zimfw update && zimfw upgrade
+
+# System monitor
+https://github.com/paradoxxxzero/gnome-shell-system-monitor-applet
+
+
+sudo /etc/init.d/networking restart
+sudo /etc/init.d/nscd restart
+
+# vpn forticlient
+https://hadler.me/linux/forticlient-sslvpn-deb-packages/
