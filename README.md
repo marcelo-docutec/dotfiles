@@ -1,4 +1,4 @@
-# MyZsh
+# MyZsh with francogp
 My ZSH configurations
 
 # Installation 

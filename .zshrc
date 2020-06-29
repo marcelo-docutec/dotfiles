@@ -16,7 +16,6 @@ export ZSH="${HOME}/.oh-my-zsh"
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="powerlevel10k/powerlevel10k"
-# ZSH_THEME="notcrossfire"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -116,6 +115,7 @@ source $(dirname $(gem which colorls))/tab_complete.sh
 
 # Remove older command from the history if a duplicate is to be added.
 setopt HIST_IGNORE_ALL_DUPS
+setopt NULL_GLOB
 
 # Set what highlighters will be used.
 # See https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters.md
@@ -134,7 +134,10 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
 [[ -d ~/.automaticScripts ]] && PATH=${PATH}${PATH:+:}~/.automaticScripts
 [[ -d ~/.local/bin ]] && PATH=${PATH}${PATH:+:}~/.local/bin
+[[ -d ~/.local/sbin ]] && PATH=${PATH}${PATH:+:}~/.local/sbin
 [[ -d ~/bin ]] && PATH=${PATH}${PATH:+:}~/bin
+[[ -d ~/sbin ]] && PATH=${PATH}${PATH:+:}~/sbin
+
 export PATH
 
 _change_dir() {
@@ -153,6 +156,17 @@ bindkey '^h' _change_dir
 zle -N _reverse_search
 bindkey '^r' _reverse_search
 
+# FIXES! DO NOT CHANGE
+alias man='nocorrect man '
+alias mv='nocorrect mv '
+alias mysql='nocorrect mysql '
+alias mkdir='nocorrect mkdir '
+alias sudo='nocorrect sudo '
+if [[ -f /usr/bin/batcat ]]; then
+   alias bat='batcat'
+fi
+
+# CUSTOM ALIASES
 alias l='colorls -lah --sd'
 alias la='colorls -lAh --sd'
 alias lc='colorls -lAh --sd'
@@ -163,29 +177,3 @@ alias lsa='colorls -lah --sd'
 alias uos='sudo apt update && sudo apt -y upgrade && sudo apt -y autoremove'
 alias uzsh='bash ~/.myzsh/update.sh && upgrade_oh_my_zsh && src'
 alias pzsh='cd ~/.myzsh && git pull && bash ~/.myzsh/update.sh && upgrade_oh_my_zsh && src'
-
-# #Tilix fix
-# if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
-#     source /etc/profile.d/vte.sh
-# fi
-
-# NVM
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
-nvm() {
-  unset -f nvm node npm
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-  nvm "$@"
-}
-node() {
-  unset -f nvm node npm
-  export NVM_DIR=~/.nvm
-  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
-  node "$@"
-}
-npm() {
-  unset -f nvm node npm
-  export NVM_DIR=~/.nvm
-  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
-  npm "$@"
-}
